@@ -4,8 +4,8 @@ pipeline {
         BUILD = "${env.BUILD_ID}"
     }
     parameters {
-        choice(name: 'repository_branch', choices: ['master', 'm-sa2-06-19', 'jenkins'], description: 'Pick the branch')
-        string(name: 'repository_url', defaultValue: 'git@github.com:Den4ik27/sa.it-academy.by.git', description: 'Github repository url')
+        choice(name: 'repository_branch', choices: ['master', 'jenkins'], description: 'Pick the branch')
+        string(name: 'repository_url', defaultValue: 'https://github.com/Den4ik27/drupal_project', description: 'Github repository url')
         booleanParam(name: 'do_clean', defaultValue: true, description: 'Do we need clean old one package?')
     }
     stages {
@@ -16,22 +16,22 @@ pipeline {
             }
         }
         stage('Checking repository'){
-            steps {
+            steps { 
                     sh "ls -l"
             }
         }
-        stage('Check DRCompose file') {
+        stage('Docer compose check file') {
             steps {
                 sh '''
-                docker-compose config
+                    docker-compose config
                 '''
             }
         }
-        stage('UPing Drupal') {
+        stage('Docer UP') {
             steps {
-		'''
-                docker-compose up -d
-		'''
+                sh '''
+                    docker-compose up -d
+                '''
             }
         }
         stage('Packing test') {
