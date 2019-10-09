@@ -4,7 +4,7 @@ pipeline {
         BUILD = "${env.BUILD_ID}"
     }
     parameters {
-        choice(name: 'repository_branch', choices: ['master', 'jenkins'], description: 'Pick the branch')
+        choice(name: 'repository_branch', choices: ['master', 'stage', 'QA'], description: 'Pick the branch')
         string(name: 'repository_url', defaultValue: 'https://github.com/Den4ik27/drupal_project', description: 'Github repository url')
         booleanParam(name: 'do_clean', defaultValue: true, description: 'Do we need clean old one package?')
     }
@@ -30,7 +30,7 @@ pipeline {
                 '''
             }
         }
-        stage('Docer UP') {
+        stage('UP with Docker-compose') {
             steps {
                 sh '''
                     docker-compose up -d
