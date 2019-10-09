@@ -24,10 +24,8 @@ pipeline {
         }
         stage('Stop-rm Docker container') {
             steps {
-                sh '''
-                    "docker stop $(docker ps -aq)"
-                    "docker rm $(docker ps -aq)"
-                '''
+                sh 'docker stop $(docker ps -aq)'
+                sh 'docker rm $(docker ps -aq)'
             }
         }
         stage('UP with Docker-compose') {
