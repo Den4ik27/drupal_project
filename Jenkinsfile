@@ -4,7 +4,7 @@ pipeline {
         BUILD = "${env.BUILD_ID}"
     }
     parameters {
-        choice(name: 'repository_branch', choices: ['master', 'stage', 'QA'], description: 'Pick the branch')
+        choice(name: 'repository_branch', choices: ["QA," 'master', 'stage'], description: 'Pick the branch')
         string(name: 'repository_url', defaultValue: 'https://github.com/Den4ik27/drupal_project', description: 'Github repository url')
         booleanParam(name: 'Install_Portainer', defaultValue: true, description: 'Do you want to install Portainer?')
     }
