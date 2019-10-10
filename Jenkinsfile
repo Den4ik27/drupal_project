@@ -6,7 +6,7 @@ pipeline {
     parameters {
         choice(name: 'repository_branch', choices: ['master', 'stage', 'QA'], description: 'Pick the branch')
         string(name: 'repository_url', defaultValue: 'https://github.com/Den4ik27/drupal_project', description: 'Github repository url')
-        booleanParam(name: 'do_clean', defaultValue: true, description: 'Do we need clean old one package?')
+        booleanParam(name: 'Install_Portainer', defaultValue: true, description: 'Do you want install Portainer?')
     }
     stages {
         stage('Clone repository') {
@@ -15,7 +15,7 @@ pipeline {
 
             }
         }
-        stage('Docer compose check file') {
+        stage('Docker compose check file') {
             steps {
                 sh '''
                     docker-compose config
@@ -35,12 +35,14 @@ pipeline {
                 '''
             }
         }
-        stage('Packing test') {
+        stage('Portainer ask installation') {
+            when {
+                expression {params.Install_Portainer == true}
+            }
             steps {
-                sh "ls -l"
+                sh 'docker-compose up -d -f portainer.yml'
             }
         }
-
     }
 
     post {
