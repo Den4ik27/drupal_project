@@ -22,13 +22,28 @@ pipeline {
                 '''
             }
         }
-        stage('Stop-rm Docker container') {
+        stage('Stop-rm Docker container for master') {
             when {
                 expression {params.repository_branch == 'master'}
             }
             steps {
-                sh 'docker stop $(docker ps -a | grep master | cut -d" " -f1)'
-                sh 'docker rm $(docker ps -a | grep master | cut -d" " -f1)'
+                sh './stop_master.sh'
+            }
+        }
+        stage('Stop-rm Docker container for QA') {
+            when {
+                expression {params.repository_branch == 'QA'}
+            }
+            steps {
+                sh './stop_QA.sh'
+            }
+        }    
+        stage('Stop-rm Docker container for stage') { 
+            when {
+                expression {params.repository_branch == 'stage'}
+            }
+            steps {
+                sh './stop_stage.sh'
             }
         }
         stage('UP with Docker-compose') {
