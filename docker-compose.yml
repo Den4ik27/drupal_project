@@ -12,7 +12,7 @@ services:
       MYSQL_PASSWORD: $DB_PASSWORD
 
   php:
-    image: wodby/drupal:$DRUPAL_TAG
+    image: 7800943/php:$DRUPAL_TAG
     container_name: "${PROJECT_NAME}_php"
     environment:
       PHP_FPM_CLEAR_ENV: "no"
