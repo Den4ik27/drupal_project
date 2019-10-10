@@ -40,7 +40,7 @@ pipeline {
                 expression {params.Install_Portainer == true}
             }
             steps {
-                sh 'docker-compose up -d -f portainer.yml --force-recreate'
+                sh 'docker-compose -f portainer.yml up -d--force-recreate'
             }
         }
     }
