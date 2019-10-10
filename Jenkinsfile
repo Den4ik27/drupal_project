@@ -24,8 +24,8 @@ pipeline {
         }
         stage('Stop-rm Docker container') {
             steps {
-                sh 'docker stop $(docker ps -a | grep master | cut -d" " -f1)'
-                sh 'docker rm $(docker ps -a | grep master | cut -d" " -f1)'
+                sh 'docker stop $(docker ps -a | grep ${params.repository_branch} | cut -d" " -f1)'
+                sh 'docker rm $(docker ps -a | grep ${params.repository_branch} | cut -d" " -f1)'
             }
         }
         stage('UP with Docker-compose') {
