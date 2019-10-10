@@ -3,12 +3,12 @@ version: "3"
 services:
   portainer:
     image: portainer/portainer
-    container_name: "${PROJECT_NAME}_portainer"
+    container_name: "Main_portainer"
     command: --no-auth -H unix:///var/run/docker.sock
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     labels:
-      - 'traefik.backend=${PROJECT_NAME}_portainer'
+      - 'traefik.backend=Main_portainer'
       - 'traefik.port=9000'
       - 'traefik.frontend.rule=Host:portainer.${PROJECT_BASE_URL}'
 
