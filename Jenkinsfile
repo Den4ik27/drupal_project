@@ -6,7 +6,7 @@ pipeline {
     parameters {
         choice(name: 'repository_branch', choices: ['master', 'stage', 'QA'], description: 'Pick the branch')
         string(name: 'repository_url', defaultValue: 'https://github.com/Den4ik27/drupal_project', description: 'Github repository url')
-        booleanParam(name: 'Install_Portainer', defaultValue: true, description: 'Do you want install Portainer?')
+        booleanParam(name: 'Install_Portainer', defaultValue: true, description: 'Do you want to install Portainer?')
     }
     stages {
         stage('Clone repository') {
@@ -23,9 +23,12 @@ pipeline {
             }
         }
         stage('Stop-rm Docker container') {
+            when {
+                expression {params.repository_branch == 'master'}
+            }
             steps {
-                sh 'docker stop $(docker ps -a | grep ${params.repository_branch} | cut -d" " -f1)'
-                sh 'docker rm $(docker ps -a | grep ${params.repository_branch} | cut -d" " -f1)'
+                sh 'docker stop $(docker ps -a | grep master | cut -d" " -f1)'
+                sh 'docker rm $(docker ps -a | grep master | cut -d" " -f1)'
             }
         }
         stage('UP with Docker-compose') {
